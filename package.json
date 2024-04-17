@@ -1,0 +1,16 @@
+{
+  "name": "syncd",
+  "version": "1.0.0",
+  "description": "An online dj booking platform",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
