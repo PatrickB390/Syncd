@@ -30,6 +30,17 @@ app.use("/api/users", usersRoute);
 app.use("/api/artists", artistsRoute);
 app.use("/api/slots", slotsRoute);
 
+app.use((err,req,res,next)=>{
+  const errortStatus = err.status || 500
+  const errorMessage = err.message || "Something went wrong!"
+  return res.status(errortStatus).json({
+    success: false,
+    status: errortStatus,
+    message: errorMessage,
+    stack: err.stack,
+  });
+});
+
 app.listen(8800, ()=>{
     connect()
     console.log("Connected to backend.")
