@@ -1,18 +1,17 @@
 import express from "express";
-import Artist from "../models/Artist.js";
-import { createError } from "../utils/error.js";
 import { createArtist, deleteArtist, getArtist, getArtists, updateArtist } from "../controllers/artist.js";
+import {verifyAdmin} from "../utils/verifyToken.js"
 
 const router = express.Router();
 
 // CREATE
-router.post("/", createArtist);
+router.post("/", verifyAdmin, createArtist);
 
 // UPDATE
-router.put("/:id", updateArtist);
+router.put("/:id", verifyAdmin, updateArtist);
 
 // DELETE
-router.delete("/:id", deleteArtist);
+router.delete("/:id", verifyAdmin, deleteArtist);
 
 // GET
 router.get("/:id", getArtist);
