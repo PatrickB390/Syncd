@@ -6,6 +6,8 @@ import usersRoute from "./routes/users.js";
 import artistsRoute from "./routes/artists.js";
 import slotsRoute from "./routes/slots.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+
 const app = express();
 dotenv.config();
 
@@ -23,6 +25,7 @@ mongoose.connection.on("disconnected", ()=>{
 });
 
 //Middlewares
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 

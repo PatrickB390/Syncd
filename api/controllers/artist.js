@@ -46,3 +46,35 @@ export const getArtists = async (req,res,next)=>{
         next(err);
     }
 }
+
+export const countByCity = async (req,res,next)=>{
+    const cities = req.query.cities.split(",")
+    try {
+        const list = await Promise.all(cities.map(city=>{
+            return Artist.countDocuments({city:city})
+        }))
+        res.status(200).json(list);
+    } catch (err) {
+        next(err);
+    }
+}
+
+export const countByGenre = async (req,res,next)=>{
+    try {
+        const dubstepCount = await Artist.countDocuments({genre:"dubstep"})
+        const drumandbassCount = await Artist.countDocuments({genre:"drumandbass"})
+        const ukgCount = await Artist.countDocuments({genre:"ukg"})
+        const houseCount = await Artist.countDocuments({genre:"house"})
+        const technoCount = await Artist.countDocuments({genre:"techno"})
+
+        res.status(200).json([
+            {type:"dubstep", count:dubstepCount},
+            {type:"drumandbass", count:drumandbassCount},
+            {type:"ukg", count:ukgCount},
+            {type:"house", count:houseCount},
+            {type:"techno", count:technoCount},
+        ]);
+    } catch (err) {
+        next(err);
+    }
+}

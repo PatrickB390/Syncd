@@ -1,6 +1,6 @@
 import express from "express";
-import { createArtist, deleteArtist, getArtist, getArtists, updateArtist } from "../controllers/artist.js";
-import {verifyAdmin} from "../utils/verifyToken.js"
+import { countByGenre, countByCity, createArtist, deleteArtist, getArtist, getArtists, updateArtist } from "../controllers/artist.js";
+import {verifyAdmin} from "../utils/verifyToken.js";
 
 const router = express.Router();
 
@@ -14,9 +14,11 @@ router.put("/:id", verifyAdmin, updateArtist);
 router.delete("/:id", verifyAdmin, deleteArtist);
 
 // GET
-router.get("/:id", getArtist);
+router.get("/find/:id", getArtist);
 
 // GET ALL
 router.get("/", getArtists);
+router.get("/countByCity", countByCity);
+router.get("/countByGenre", countByGenre);
 
 export default router;
