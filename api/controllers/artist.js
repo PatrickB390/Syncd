@@ -38,14 +38,19 @@ export const getArtist = async (req,res,next)=>{
     }
 }
 
-export const getArtists = async (req,res,next)=>{
+export const getArtists = async (req, res, next) => {
+    const { min, max, limit, ...others } = req.query;
     try {
-        const artists = await Artist.find();
+        const artists = await Artist.find({
+            ...others,
+            cheapestPrice: { $gt: min || 1, $lt: max || 999 },
+        }).limit(parseInt(req.query.limit));
         res.status(200).json(artists);
     } catch (err) {
         next(err);
     }
 }
+
 
 export const countByCity = async (req,res,next)=>{
     const cities = req.query.cities.split(",")
@@ -61,18 +66,18 @@ export const countByCity = async (req,res,next)=>{
 
 export const countByGenre = async (req,res,next)=>{
     try {
-        const dubstepCount = await Artist.countDocuments({genre:"dubstep"})
-        const drumandbassCount = await Artist.countDocuments({genre:"drumandbass"})
-        const ukgCount = await Artist.countDocuments({genre:"ukg"})
-        const houseCount = await Artist.countDocuments({genre:"house"})
-        const technoCount = await Artist.countDocuments({genre:"techno"})
+        const dubstepCount = await Artist.countDocuments({genre:"dubstep"});
+        const drumandbassCount = await Artist.countDocuments({genre:"drumandbass"});
+        const ukgCount = await Artist.countDocuments({genre:"ukg"});
+        const houseCount = await Artist.countDocuments({genre:"house"});
+        const technoCount = await Artist.countDocuments({genre:"techno"});
 
         res.status(200).json([
-            {type:"dubstep", count:dubstepCount},
-            {type:"drumandbass", count:drumandbassCount},
-            {type:"ukg", count:ukgCount},
-            {type:"house", count:houseCount},
-            {type:"techno", count:technoCount},
+            {genre:"dubstep", count:dubstepCount},
+            {genre:"drumandbass", count:drumandbassCount},
+            {genre:"ukg", count:ukgCount},
+            {genre:"house", count:houseCount},
+            {genre:"techno", count:technoCount},
         ]);
     } catch (err) {
         next(err);
