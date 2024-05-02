@@ -1,5 +1,5 @@
 import express from "express";
-import { countByGenre, countByCity, createArtist, deleteArtist, getArtist, getArtists, updateArtist } from "../controllers/artist.js";
+import { countByGenre, countByCity, createArtist, deleteArtist, getArtist, getArtists, updateArtist, getArtistSlots } from "../controllers/artist.js";
 import {verifyAdmin} from "../utils/verifyToken.js";
 
 const router = express.Router();
@@ -20,5 +20,6 @@ router.get("/find/:id", getArtist);
 router.get("/", getArtists);
 router.get("/countByCity", countByCity);
 router.get("/countByGenre", countByGenre);
+router.get("/slot/:id", getArtistSlots);
 
 export default router;

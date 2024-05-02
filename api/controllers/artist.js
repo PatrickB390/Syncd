@@ -1,6 +1,8 @@
 import Artist from "../models/Artist.js";
+import Slot from "../models/Slot.js";
 
 export const createArtist = async (req,res,next)=>{
+    const artistId = req.params.artistId;
     const newArtist = new Artist(req.body);
 
     try {
@@ -82,4 +84,17 @@ export const countByGenre = async (req,res,next)=>{
     } catch (err) {
         next(err);
     }
-}
+};
+
+export const getArtistSlots = async (req, res, next) => {
+    try {
+        const artist = await Artist.findById(req.params.id);
+        const list = await Promise.all(artist.slots.map(slot=>{
+            return Slot.findById(slot);
+        })
+    );
+    res.status(200).json(list)
+    } catch (err) {
+        next(err);
+    }
+};

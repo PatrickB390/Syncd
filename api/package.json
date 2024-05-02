@@ -4,6 +4,7 @@
   "description": "An online dj booking platform",
   "main": "index.js",
   "type": "module",
+  "homepage": "/",
   "scripts": {
     "start": "nodemon index.js"
   },
